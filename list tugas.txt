@@ -21,7 +21,7 @@ env (clear)
 Cors (clear)
 (Opsional) Dokumentasi Postman (clear)
 Flowchart dari API kalian (clear)
-GitHub readme(http blabalab buat apa)
+GitHub readme(http blabalab buat apa) (clear)
 
 
 

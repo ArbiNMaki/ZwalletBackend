@@ -41,6 +41,16 @@
 	<br><br>
 	kalian bisa kunjungi situs <a href="https://www.galihlprakoso.com/2019/04/apa-itu-rest-ful-api-pengertian-penjelasan.html">https://www.galihlprakoso.com/2019/04/apa-itu-rest-ful-api-pengertian-penjelasan.html</a> untuk lebih lengkapnya
 </p>
+
+<br>
+<h2>MySQL</h2>
+<p>
+	MySQL adalah sebuah database management system (manajemen basis data) menggunakan perintah dasar SQL (Structured Query Language). MySQL masuk ke dalam jenis RDBMS (Relational Database Management System). Maka dari itu, istilah semacam baris, kolom, tabel, dipakai pada MySQL. Contohnya di dalam MySQL sebuah database terdapat satu atau beberapa tabel.
+	<br><br>
+	SQL sendiri merupakan suatu bahasa yang dipakai di dalam pengambilan data pada relational database atau database yang terstruktur. Jadi MySQL adalah database management system yang menggunakan bahasa SQL sebagai bahasa penghubung antara perangkat lunak aplikasi dengan database server.
+	<br><br>
+	untuk referensi yg saya dapat <a href="https://www.niagahoster.co.id/blog/mysql-adalah/">https://www.niagahoster.co.id/blog/mysql-adalah/</a>
+</p>
 <br>
 <br>
 <span>Folder HTML to test Cors</span>
