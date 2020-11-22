@@ -45,6 +45,8 @@
 <br>
 <span>Folder HTML to test Cors</span>
 <br>
+flowchart <a href="https://app.diagrams.net/#G152gxRVmuTOI5Onf2aXVx6Wg5YjAxezb1">https://app.diagrams.net/#G152gxRVmuTOI5Onf2aXVx6Wg5YjAxezb1</a>
+<br>
 <h3>USERS</h3>
 set on your postman
 <p>
