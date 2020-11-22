@@ -18,11 +18,11 @@
 <h2> EXPRESS JS</h2>
 <p>
 	exprees js merupakan sebuah framework yang memiliki fitur routing, rendering view dan mendukung middleware.. ya kurang lebih seperti MVC, model view controller..
-	<br>
+	<br><br>
 	express js biasanya berfungsi untuk mengembangkan berbagai produk seperti aplikasi web ataupun RESTful API.
-	<br>
+	<br><br>
 	kalian bisa langsung mengunjungi situs <a href="https://idjs.github.io/belajar-nodejs/expressjs/index.html">https://idjs.github.io/belajar-nodejs/expressjs/index.html</a>
-	<br>
+	<br><br>
 	atau ke situs resmi di <a href="https://expressjs.com/">https://expressjs.com/</a>
 </p>
 
@@ -30,15 +30,15 @@
 <h2>RESTful API</h2>
 <p>
 	API. (Application Programming Interface) adalah kumpulan aturan yang memungkinkan dua atau lebih program untuk berkomunikasi satu sama lain. API dibuat di server untuk kemudian dapat memungkinkan client untuk dapat berkomunikasi dengannya.
-	<br>
+	<br><br>
 	REST. (Representational State Transfer) adalah jenis dari API atau yang menggambarkan bentuk dari API itu seperti apa. REST adalah kumpulan aturan yang diikuti oleh developer untuk membuat API
-	<br>
+	<br><br>
 	RESTful API merupakani jembatan antara database dengan client. Sehingga, client dapat berkomunikasi dengan server, mengambil dan memanipulasi data yang ada di database sesuai dengan aturan - aturan yang sudah diberikan tanpa memungkinkan mereka untuk dapat merusak / merubah sesuatu di luar aturan yang berlaku.
-	<br>
+	<br><br>
 	Ada dua hal yang sangat penting untuk kamu ketahui sebelum mengenal lebih dalam tentang apa itu RESTful API. Yaitu, Request dan Response.
-	<br>
+	<br><br>
 	Setiap URL yang ada pada RESTful API disebut dengan Request. Sedangkan Response adalah data yang dikembalikan setelah client melakukan Request.
-	<br>
+	<br><br>
 	kalian bisa kunjungi situs <a href="https://www.galihlprakoso.com/2019/04/apa-itu-rest-ful-api-pengertian-penjelasan.html">https://www.galihlprakoso.com/2019/04/apa-itu-rest-ful-api-pengertian-penjelasan.html</a> untuk lebih lengkapnya
 </p>
 <br>
