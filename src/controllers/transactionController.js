@@ -5,7 +5,8 @@ const helper = require('../helpers/helpers')
 const Transaction = {
   view: (req, res) => {
     const sort = req.query.sort
-    modelTransaction.viewAll(sort)
+    const id = req.query.id
+    modelTransaction.viewAll(sort,id)
       .then(result => {
         const resultTransaction = result
         res.json(resultTransaction)
@@ -15,11 +16,11 @@ const Transaction = {
       })
   },
   insert: (req, res) => {
-    const { id_user_sender, id_user_receiver, amount, notes } = req.body
+    const { senderId, receiverId, amount, notes } = req.body
 
     const data = {
-      id_user_sender,
-      id_user_receiver,
+      senderId,
+      receiverId,
       amount,
       date: new Date(),
       notes,

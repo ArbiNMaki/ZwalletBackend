@@ -3,24 +3,23 @@ const connection = require('../configs/db')
 const users = {
   viewUsers: (search, limit, offset) => {
     return new Promise((resolve, reject) => {
-      if (search) {
-        connection.query(`SELECT * FROM users WHERE CONCAT(name,' ', phone) LIKE '%${search}%'`, (error, results) => {
+      if (search && limit && offset >= 0) {
+        connection.query(`SELECT * FROM users WHERE ( NOT id= 1 AND CONCAT(name,' ', phone) LIKE '%${search}%') LIMIT ${limit} OFFSET ${offset}`, (error, results) => {
           if (!error) {
-            resolve(results)
+            connection.query(`SELECT COUNT(id) FROM users WHERE NOT id= 1 AND CONCAT(name,' ', phone) LIKE '%${search}%'`, (error2, results2) => {
+              resolve({
+                status: 200,
+                rows: results2[0]['COUNT(id)'],
+                data: results
+              })
+            })
           } else {
             reject(error)
           }
         })
-      } else if (limit && offset) {
-        connection.query(`SELECT * FROM users LIMIT ${limit} OFFSET ${offset}`, (error, results) => {
-          if (!error) {
-            resolve(results)
-          } else {
-            reject(error)
-          }
-        })
-      } else {
-        connection.query('SELECT * FROM users', (error, results) => {
+      }
+      else {
+        connection.query('SELECT * FROM users WHERE NOT id= 1', (error, results) => {
           if (!error) {
             resolve(results)
           } else {

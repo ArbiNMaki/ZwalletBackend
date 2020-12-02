@@ -1,10 +1,10 @@
 const connection = require('../configs/db')
 
 const Transaction = {
-  viewAll: (sort) => {
+  viewAll: (sort,id) => {
     return new Promise((resolve, reject) => {
-      if (sort) {
-        connection.query(`SELECT trans.id as id_trasaksi,trans.amount, u.name as nama_pengirim, us.name as nama_penerima,trans.date,trans.notes,trans.createdAt FROM transaction trans INNER JOIN users u ON (u.id = trans.id_user_sender) INNER JOIN users us ON (us.id =trans.id_user_receiver) ORDER BY trans.id ${sort}`, (error, results) => {
+      if (sort && id) {
+        connection.query(`SELECT trans.id as id_trasaksi,trans.senderId,trans.receiverId,trans.amount, u.name as nama_pengirim, us.name as nama_penerima,trans.date,trans.notes,u.image as image_sender,us.image as image_receiver,trans.createdAt FROM transaction trans INNER JOIN users u ON (u.id = trans.senderId) INNER JOIN users us ON (us.id =trans.receiverId) WHERE senderId=${id} OR receiverId=${id} ORDER BY trans.date ${sort}`, (error, results) => {
           if (!error) {
             resolve(results)
           } else {
@@ -12,7 +12,7 @@ const Transaction = {
           }
         })
       } else {
-        connection.query('SELECT trans.id as id_trasaksi,trans.amount, u.name as nama_pengirim, us.name as nama_penerima,trans.date,trans.notes,trans.createdAt FROM transaction trans INNER JOIN users u ON (u.id = trans.id_user_sender) INNER JOIN users us ON (us.id =trans.id_user_receiver)', (error, results) => {
+        connection.query(`SELECT trans.id as id_trasaksi,trans.senderId,trans.receiverId,trans.amount, u.name as nama_pengirim, us.name as nama_penerima,trans.date,trans.notes,u.image as image_sender,us.image as image_receiver,trans.createdAt FROM transaction trans INNER JOIN users u ON (u.id = trans.senderId) INNER JOIN users us ON (us.id =trans.receiverId) WHERE senderId=${id} OR receiverId=${id} ORDER BY trans.date DESC `, (error, results) => {
           if (!error) {
             resolve(results)
           } else {
@@ -41,7 +41,7 @@ const Transaction = {
   },
   getTransactionById: (id) => {
     return new Promise((resolve, reject) => {
-      connection.query('SELECT trans.id as id_trasaksi,trans.amount, u.name as nama_pengirim, us.name as nama_penerima,trans.date,trans.notes,trans.createdAt FROM transaction trans INNER JOIN users u ON (u.id = trans.id_user_sender) INNER JOIN users us ON (us.id =trans.id_user_receiver) WHERE trans.id = ?', id, (error, results) => {
+      connection.query('SELECT trans.id as id_trasaksi,trans.amount, u.name as nama_pengirim, us.name as nama_penerima,trans.date,trans.notes,trans.createdAt FROM transaction trans INNER JOIN users u ON (u.id = trans.senderId) INNER JOIN users us ON (us.id =trans.receiverId) WHERE trans.id = ?', id, (error, results) => {
         if (!error) {
           resolve(results)
         } else {
@@ -55,7 +55,7 @@ const Transaction = {
     return new Promise((resolve, reject) => {
       connection.query('UPDATE transaction SET ?  WHERE id = ?', [data, id], (error, results) => {
         if (!error) {
-          connection.query('SELECT trans.id as id_trasaksi,trans.amount, u.name as nama_pengirim, us.name as nama_penerima,trans.date,trans.notes,trans.createdAt FROM transaction trans INNER JOIN users u ON (u.id = trans.id_user_sender) INNER JOIN users us ON (us.id =trans.id_user_receiver) WHERE trans.id = ?', id, (error2, results2) => {
+          connection.query('SELECT trans.id as id_trasaksi,trans.amount, u.name as nama_pengirim, us.name as nama_penerima,trans.date,trans.notes,trans.createdAt FROM transaction trans INNER JOIN users u ON (u.id = trans.senderId) INNER JOIN users us ON (us.id =trans.receiverId) WHERE trans.id = ?', id, (error2, results2) => {
             resolve({
               status: 200,
               message: 'Data Berhasil Diupdate',

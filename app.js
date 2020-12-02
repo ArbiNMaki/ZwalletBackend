@@ -11,7 +11,10 @@ app.use(cors())
 const routerUsers = require('./src/routes/users')
 const routerTransaction = require('./src/routes/transaction')
 const routerTopup = require('./src/routes/topup')
+const routerPhone = require('./src/routes/managePhone')
+const routerAuth = require('./src/routes/auth')
 // const routerProducts = require('./src/routes/products')
+
 
 app.use(bodyParser.urlencoded({ extended: false }))
 app.use(bodyParser.json())
@@ -20,8 +23,11 @@ app.use(morgan('dev'))
 app.use('/users', routerUsers)
 app.use('/transaction', routerTransaction)
 app.use('/topup', routerTopup)
+app.use('/managePhone', routerPhone)
+app.use('/auth', routerAuth)
 // app.use('/products', routerProducts)
 
+app.use('/uploads',express.static('./uploads'))
 app.use((err, req, res, next) => {
   helper.response(err.statusCek, res, null, err.status, err.message)
 })
