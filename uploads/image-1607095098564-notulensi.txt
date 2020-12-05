@@ -1,0 +1,28 @@
+SULIT MEMAHAMI MATERI
+
+Masalah :
+Hanif : Kemampuan bahasa inggris yang kurang bagus dimana untuk belajar pemograman harus memiliki kemampuan bahasa inggris yang bagus dikarenakan sumber dan dokumentasi serta istilah-istilah pemograman yang kebanyakan menggunakan menggunakan bahasa inggris.
+
+Fendi : Sama dengan hanif, memiliki kemampuan bahasa inggris yang kurang dan belajar jika ada tugas/project dan teman
+
+Trisa : termasuk baru dalam dunia web programming sehingga tidak memiliki dasaran dan kesusahan memahami materi
+
+Eggy : Materi yang dipelajari termasuk baru belum pernah dipelajari sebelumnya selama kuliah sehingga banyak istilah-istilah asing karena masih awam dalam dunia web programming.
+
+Solusi :
+
+Kemampuan bahasa inggris yang kurang :
+-Bisa menggunakan ekstensi google translate yang ada pada goole chrome
+-Menggunakan subtitle untuk video asing di youtube
+-Menggubakan channel youtube atau sumber dari bahasa Indonesia meskipun channel luar lebih lengkap. Jika ingin menggunakan channel luar, balik ke poin 2
+-Improvement : membiasakan diri membaca dokumentasi bahasa asing agar terbiasa
+
+Baru belajar jika ada project atau tugas :
+- Buat tujuan atau timeline sendiri untuk belajar serta memiliki motivasi dan semangat yang kuat 
+- perlu saingan/rival/teman belajar untuk memacu kita agar belajar lebih giat
+
+Masih baru dalam dunia web programming :
+- Langsung praktek kalau gak terlalu paham dengan teori agar lebih mudah memahami materi
+- mengulas lagi pelajaran yang sudah diberikan
+- bertanya kepada teman atau mentor
+- materi yang disampaikan besok dipelajari lagi sebelumnya
