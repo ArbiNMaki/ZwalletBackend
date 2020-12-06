@@ -31,8 +31,8 @@ const email = req.body.email
 const title = req.body.title
 const message = req.body.message
 sendEmail(email,title,message)
-.then((res) => {
-        helper.response('error', res, {id : res.messageId}, 200, null)
+.then((result) => {
+        helper.response('success', res, {id : res.messageId}, 200, 'Email Sent Successfully')
 })
 .catch((err) => {
         helper.response('error', res, null, 500, 'error send email')
