@@ -1,24 +1,21 @@
 const nodemailer = require("nodemailer")
-// create reusable transporter object using the default SMTP transport
-let transporter = nodemailer.createTransport({
-  host: "smtp.gmail.com",
-  port: 465,
-  secure: true,
-  service: 'gmail',
-  auth: {
-    user: process.env.EMAIL, // generated ethereal user
-    pass: process.env.PW_EMAIL, // generated ethereal password
-  },
-});
-exports.sendEmail = (email, title, text) => {
-  return new Promise((resolve, reject) => {
-    // send mail with defined transport object
-    const message = {
-      from: process.env.EMAIL, // sender address
-      to: email, // list of receivers
-      subject: "Welcome To My Message", // Subject line
-      // text: "Hello world?", // plain text body
-      html: `<!DOCTYPE html>
+  // create reusable transporter object using the default SMTP transport
+  let transporter = nodemailer.createTransport({
+    service:'gmail',
+    auth: {
+      user: process.env.EMAIL, // generated ethereal user
+      pass: process.env.PW_EMAIL, // generated ethereal password
+    },
+  });
+  exports.sendEmail = (email,title,text) => {
+ return new Promise((resolve,reject)=>{
+        // send mail with defined transport object
+        const message = {
+            from: process.env.EMAIL, // sender address
+            to: email, // list of receivers
+            subject: "Welcome To My Message", // Subject line
+            // text: "Hello world?", // plain text body
+            html: `<!DOCTYPE html>
             <html>
             <head>
             <style>
@@ -112,16 +109,16 @@ exports.sendEmail = (email, title, text) => {
             </body>
             </html>
             `, // html body
-    }
-    transporter.sendMail(message, (error, info) => {
-      if (error) {
-        // console.log('Error occurred');
-        // console.log(error.message);
-        // return process.exit(1);
-        reject(error)
-      } else {
-        resolve(info)
-      }
+          }
+    transporter.sendMail(message,(error, info) => {
+        if (error) {
+            // console.log('Error occurred');
+            // console.log(error.message);
+            // return process.exit(1);
+            reject(error)
+        }else{
+            resolve(info)
+        }
     });
-  })
-}
+ })
+  }
