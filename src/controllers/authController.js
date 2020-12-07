@@ -35,6 +35,6 @@ sendEmail(email,title,message)
         helper.response('success', res, {id : res.messageId}, 200, 'Email Sent Successfully')
 })
 .catch((err) => {
-        helper.response('error', res, null, 500, 'error send email')
+        helper.response('error', res, null, 500, err)
 })
 }
