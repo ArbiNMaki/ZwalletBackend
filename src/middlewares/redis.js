@@ -13,11 +13,6 @@ exports.cacheAllUser = (req, res, next) => {
         }
     })
 }
-exports.deleteCacheAllUser = (req, res, next) => {
-    client.get("getAllUser")
-    next()
-}
-
 exports.getDetailUser = (req, res, next) => {
     const id = req.params.id
     client.get("user"+id, function (err, data) {

@@ -99,6 +99,10 @@ const Users = {
     }else {
       data.image = `${process.env.BASE_URL}/uploads/${req.file.filename}`
       data.updatedAt = new Date()
+      modelUsers.deleteImage(id)
+      .then(result => {
+        console.log(result)
+      })
     }
       modelUsers.updateUser(id, data)
       .then(result => {
@@ -114,7 +118,6 @@ const Users = {
   delete: (req, res, next) => {
     const id = req.params.id
     const userData = req.users
-    // console.log(userData.userId)
     if (id == userData.userId) {
      return helper.response('error', res, null, 200, 'cannot delete your id')
     } else if (userData.role === 'user') {
@@ -123,7 +126,6 @@ const Users = {
       modelUsers.deleteUser(id)
         .then(result => {
           const resultUser = result
-          console.log(resultUser)
           if (resultUser.affectedRows === 0) {
             const error = new Error('Data Param or Patch Not Failed')
             error.status = 404

@@ -1,5 +1,5 @@
 const connection = require('../configs/db')
-
+const fs = require('fs')
 const users = {
   viewUsers: (search, limit, offset) => {
     return new Promise((resolve, reject) => {
@@ -62,12 +62,40 @@ const users = {
       connection.query('UPDATE users SET ?  WHERE id = ?', [data, id], (error, results) => {
         if (!error) {
           connection.query('SELECT * FROM users WHERE id = ?', id, (error2, results2) => {
+            if ( results.affectedRows === 0) {
+              resolve({
+              status: 401,
+              message: 'Id Not Found'
+            })
+            }
             resolve({
               status: 200,
               message: 'Data Berhasil Diupdate',
               data: results2
             })
           })
+        } else {
+          reject(error)
+        }
+      })
+    })
+  },
+  deleteImage: (id) => {
+    return new Promise((resolve, reject) => {
+      connection.query('SELECT image FROM users WHERE id = ?', id, (error, results) => {
+        if (!error) {
+          if(results[0].image !== 'https://cdn.icon-icons.com/icons2/1378/PNG/512/avatardefault_92824.png'){
+            const images = results[0].image.split('/')[4]
+            const path = `uploads/${images}`
+            fs.unlink(path, (err) => {
+              if (err) {
+                resolve({message: err})
+              }
+              else{
+                resolve({message: 'Gambar Berhasil Dihapus'})
+              }
+            })
+          }
         } else {
           reject(error)
         }
