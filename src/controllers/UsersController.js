@@ -41,7 +41,8 @@ const Users = {
             modelUsers.insertUsers(data)
               .then(result => {
                 const resultUsers = result
-                res.json(resultUsers)
+                // res.json(resultUsers)
+                console.log(resultUsers)
               })
               .catch((err) => {
                 helper.response('error', res, null, 200, err.sqlMessage)
