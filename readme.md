@@ -40,8 +40,8 @@ SECRET_KEY =
 EMAIL = 
 PW_EMAIL = 
 ```
-
-## Create a folder for the destination of the image upload directory (make sure the current folder is the Zwallet Backend folder)
+<br>
+Create a folder for the destination of the image upload directory (make sure the current folder is the Zwallet Backend folder)
 
 ```
 mkdir uploads
