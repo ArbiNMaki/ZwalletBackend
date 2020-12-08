@@ -1,4 +1,12 @@
-# zwalletapp
+# Zwallet backend
+Easy Way of Transaction
+With Zwallet, banking just got easier. You can carry out almost any transaction. #ChangeDompet and enjoy a faster, more practical and safer transaction method.
+
+## Requirements
+```
+MySQL
+Node.js
+```
 
 ## Project setup
 ```
@@ -33,8 +41,19 @@ EMAIL =
 PW_EMAIL = 
 ```
 
+## Create a folder for the destination of the image upload directory (make sure the current folder is the Zwallet Backend folder)
+
+```
+mkdir uploads
+```
 
 ### Compiles and hot-reloads for development
 ```
 npm run dev
 ```
+
+
+## Postman Collection for testing
+<br>
+
+[![Run in Postman](https://run.pstmn.io/button.svg)](https://app.getpostman.com/run-collection/95accfab92ed0867b22e)

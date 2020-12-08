@@ -33,7 +33,7 @@ const users = {
     return new Promise((resolve, reject) => {
       connection.query('INSERT INTO users SET ?', data, (error, results) => {
         if (!error) {
-          connection.query('SELECT * FROM users WHERE id = ?', results.insertId, (error2, results2) => {
+          connection.query('SELECT  name,phone,email,saldo,image,role,createdAt,updatedAt FROM users WHERE id = ?', results.insertId, (error2, results2) => {
             resolve({
               status: 200,
               message: 'Data Berhasil Diinputkan',
@@ -48,7 +48,7 @@ const users = {
   },
   getUserById: (id) => {
     return new Promise((resolve, reject) => {
-      connection.query('SELECT * FROM users WHERE id = ?', id, (error, results) => {
+      connection.query('SELECT name,phone,email,saldo,image,role,createdAt,updatedAt FROM users WHERE id = ?', id, (error, results) => {
         if (!error) {
           resolve(results)
         } else {
@@ -61,13 +61,7 @@ const users = {
     return new Promise((resolve, reject) => {
       connection.query('UPDATE users SET ?  WHERE id = ?', [data, id], (error, results) => {
         if (!error) {
-          connection.query('SELECT * FROM users WHERE id = ?', id, (error2, results2) => {
-            if ( results.affectedRows === 0) {
-              resolve({
-              status: 401,
-              message: 'Id Not Found'
-            })
-            }
+          connection.query('SELECT name,phone,email,saldo,image,role,updatedAt FROM users WHERE id = ?', id, (error2, results2) => {
             resolve({
               status: 200,
               message: 'Data Berhasil Diupdate',
@@ -92,7 +86,7 @@ const users = {
                 resolve({message: err})
               }
               else{
-                resolve({message: 'Gambar Berhasil Dihapus'})
+                resolve({message: 'Gambar Lama Berhasil Dihapus'})
               }
             })
           }

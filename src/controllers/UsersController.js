@@ -14,7 +14,7 @@ const Users = {
     modelUsers.viewUsers(search, limit, offset)
       .then(result => {
         const resultUser = result
-        client.setex("getAllUser",60*60,JSON.stringify(resultUser))
+        client.setex("getAllUser", 60 * 60, JSON.stringify(resultUser))
         res.json(resultUser)
       })
       .catch((err) => {
@@ -32,18 +32,7 @@ const Users = {
         if (result.length > 0) {
           return helper.response('error', res, null, 401, { error: 'email is already in use' })
         }
-        else if (!req.file) {
-          data.image = 'https://cdn.icon-icons.com/icons2/1378/PNG/512/avatardefault_92824.png'
-        }
-        else if (req.file.mimetype !== "image/png" && req.file.mimetype !== "image/jpg" && req.file.mimetype !== "image/jpeg") {
-          return helper.response('error', res, null, 401, 'Only .png, .jpg and .jpeg format allowed!')
-          }
-          else if (req.file.size >= 8388608) {
-            return helper.response('error', res, null, 401, 'Image size is too large, it must be under 8MB')
-          } 
-          else{
-            data.image = `${process.env.BASE_URL}/uploads/${req.file.filename}`
-          }
+        data.image = 'https://cdn.icon-icons.com/icons2/1378/PNG/512/avatardefault_92824.png'
         bcrypt.genSalt(10, function (err, salt) {
           bcrypt.hash(data.password, salt, function (err, hash) {
             data.password = hash
@@ -74,7 +63,7 @@ const Users = {
           error.statusCek = 'error'
           return next(error)
         }
-        client.setex("user"+id,60*60,JSON.stringify(resultUser))
+        client.setex("user" + id, 60 * 60, JSON.stringify(resultUser))
         res.json(resultUser)
       })
       .catch((err) => {
@@ -92,21 +81,25 @@ const Users = {
       data.updatedAt = new Date()
     }
     else if (req.file.mimetype !== "image/png" && req.file.mimetype !== "image/jpg" && req.file.mimetype !== "image/jpeg") {
-     return helper.response('error', res, null, 401, 'Only .png, .jpg and .jpeg format allowed!')
+      return helper.response('error', res, null, 401, 'Only .png, .jpg and .jpeg format allowed!')
     }
     else if (req.file.size >= 8388608) {
       return helper.response('error', res, null, 401, 'Image size is too large, it must be under 8MB')
-    }else {
+    } else {
       data.image = `${process.env.BASE_URL}/uploads/${req.file.filename}`
       data.updatedAt = new Date()
       modelUsers.deleteImage(id)
-      .then(result => {
-        console.log(result)
-      })
+        .then(result => {
+          console.log(result)
+        })
     }
-      modelUsers.updateUser(id, data)
+    modelUsers.updateUser(id, data)
       .then(result => {
         const resultUser = result
+        if(resultUser.data.length === 0)
+        {
+          return helper.response('error', res, null, 401, 'Id Not Found')
+        }
         res.json(resultUser)
       })
       .catch((err) => {
@@ -119,26 +112,26 @@ const Users = {
     const id = req.params.id
     const userData = req.users
     if (id == userData.userId) {
-     return helper.response('error', res, null, 200, 'cannot delete your id')
+      return helper.response('error', res, null, 200, 'cannot delete your id')
     } else if (userData.role === 'user') {
       return helper.response('error', res, null, 401, 'you are not admin, data cannot be deleted')
     }
-      modelUsers.deleteUser(id)
-        .then(result => {
-          const resultUser = result
-          if (resultUser.affectedRows === 0) {
-            const error = new Error('Data Param or Patch Not Failed')
-            error.status = 404
-            error.statusCek = 'error'
-            return next(error)
-          }
-          helper.response('success', res, null, 200, `id ${id} deleted successfully`)
+    modelUsers.deleteUser(id)
+      .then(result => {
+        const resultUser = result
+        if (resultUser.affectedRows === 0) {
+          const error = new Error('Data Param or Patch Not Failed')
+          error.status = 404
+          error.statusCek = 'error'
+          return next(error)
+        }
+        helper.response('success', res, null, 200, `id ${id} deleted successfully`)
+      })
+      .catch((err) => {
+        res.status(400).json({
+          message: 'data error'
         })
-        .catch((err) => {
-          res.status(400).json({
-            message: 'data error'
-          })
-        })
+      })
   }
 }
 
