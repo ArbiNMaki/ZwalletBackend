@@ -1,12 +1,12 @@
 const connection = require('../configs/db')
 const fs = require('fs')
 const users = {
-  viewUsers: (search, limit, offset) => {
+  viewUsers: (id,search, limit, offset) => {
     return new Promise((resolve, reject) => {
       if (search && limit && offset >= 0) {
-        connection.query(`SELECT * FROM users WHERE ( NOT id= 1 AND CONCAT(name,' ', phone) LIKE '%${search}%') LIMIT ${limit} OFFSET ${offset}`, (error, results) => {
+        connection.query(`SELECT * FROM users WHERE ( NOT id='${id}' AND CONCAT(name,' ', phone) LIKE '%${search}%') LIMIT ${limit} OFFSET ${offset}`, (error, results) => {
           if (!error) {
-            connection.query(`SELECT COUNT(id) FROM users WHERE NOT id= 1 AND CONCAT(name,' ', phone) LIKE '%${search}%'`, (error2, results2) => {
+            connection.query(`SELECT COUNT(id) FROM users WHERE NOT id='${id}' AND CONCAT(name,' ', phone) LIKE '%${search}%'`, (error2, results2) => {
               resolve({
                 status: 200,
                 rows: results2[0]['COUNT(id)'],
@@ -19,7 +19,7 @@ const users = {
         })
       }
       else {
-        connection.query('SELECT * FROM users WHERE NOT id= 1', (error, results) => {
+        connection.query(`SELECT * FROM users WHERE NOT id='${id}'`, (error, results) => {
           if (!error) {
             resolve(results)
           } else {
@@ -30,10 +30,11 @@ const users = {
     })
   },
   insertUsers: (data) => {
+    delete data.link
     return new Promise((resolve, reject) => {
       connection.query('INSERT INTO users SET ?', data, (error, results) => {
         if (!error) {
-          connection.query('SELECT  name,phone,email,saldo,image,role,createdAt,updatedAt FROM users WHERE id = ?', results.insertId, (error2, results2) => {
+          connection.query('SELECT  * FROM users WHERE id = ?', data.id, (error2, results2) => {
             resolve({
               status: 200,
               message: 'Data Berhasil Diinputkan',
@@ -48,7 +49,7 @@ const users = {
   },
   getUserById: (id) => {
     return new Promise((resolve, reject) => {
-      connection.query('SELECT name,phone,email,saldo,image,role,createdAt,updatedAt FROM users WHERE id = ?', id, (error, results) => {
+      connection.query('SELECT * FROM users WHERE id = ?', id, (error, results) => {
         if (!error) {
           resolve(results)
         } else {

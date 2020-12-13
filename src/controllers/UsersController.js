@@ -1,20 +1,23 @@
 const { throws } = require('assert')
+const { v4: uuidv4 } = require('uuid')
 const modelUsers = require('../models/Users')
 const bcrypt = require('bcryptjs')
 const helper = require('../helpers/helpers')
 const { cekUser } = require('../models/auth')
 var multer = require('multer')
 const redis = require("redis")
+const { sendEmail } = require('../helpers/email')
 const client = redis.createClient(6379)
 const Users = {
   view: (req, res) => {
+  	const idUser = req.users.userId
     const search = req.query.search || ' '
     const limit = req.query.limit || 4
     const offset = (req.query.page - 1) * limit
-    modelUsers.viewUsers(search, limit, offset)
+    modelUsers.viewUsers(idUser, search, limit, offset)
       .then(result => {
         const resultUser = result
-        client.setex("getAllUser", 60 * 60, JSON.stringify(resultUser))
+        // client.setex("getAllUser", 20, JSON.stringify(resultUser))
         res.json(resultUser)
       })
       .catch((err) => {
@@ -24,31 +27,51 @@ const Users = {
   insert: (req, res) => {
     let data = req.body
     data = JSON.parse(JSON.stringify(data))
-    //  validasi
-
-
+    data.id = uuidv4()
     cekUser(data.email)
       .then((result) => {
         if (result.length > 0) {
-          return helper.response('error', res, null, 401, { error: 'email is already in use' })
+          return helper.response('error', res, null, 401,'email is already in use')
         }
         data.image = 'https://cdn.icon-icons.com/icons2/1378/PNG/512/avatardefault_92824.png'
         bcrypt.genSalt(10, function (err, salt) {
           bcrypt.hash(data.password, salt, function (err, hash) {
             data.password = hash
+            data.role = 'user'
+            data.verification = 'nothing'
             data.createdAt = new Date()
             data.updatedAt = new Date()
             modelUsers.insertUsers(data)
               .then(result => {
-                const resultUsers = result
-                // res.json(resultUsers)
-                console.log(resultUsers)
+                const resultUsers = result.data[0]
+                delete resultUsers.password
+                delete resultUsers.pin
+                client.flushdb(function (err, succeeded) {
+                  console.log(succeeded)
+                })
+                // send email
+                const email = resultUsers.email
+                const username = resultUsers.username
+                const link = req.body.link
+                sendEmail(email, username, link)
+                  .then((result) => {
+                    console.log('Send Email Success')
+                  })
+                  .catch((err) => {
+                   return helper.response('error', res, null, 500, err)
+                  })
+                // end send email
+                resultUsers.message2 = 'check your email for account verification'
+                res.json(resultUsers)
               })
               .catch((err) => {
-                helper.response('error', res, null, 200, err.sqlMessage)
+                helper.response('error', res, null, 401, err.sqlMessage)
               })
           })
         })
+      })
+      .catch((err) => {
+        helper.response('error', res, null, 401, err.sqlMessage)
       })
     // end validasi
 
@@ -59,12 +82,11 @@ const Users = {
       .then(result => {
         const resultUser = result
         if (resultUser.length === 0) {
-          const error = new Error('Data Param or Patch Not Failed')
-          error.status = 404
-          error.statusCek = 'error'
-          return next(error)
+          return helper.response('error', res, null, 401, 'Id Not Found')
         }
-        client.setex("user" + id, 60 * 60, JSON.stringify(resultUser))
+        delete resultUser[0].password
+        delete resultUser[0].pin
+        // client.setex("userById" + id, 20, JSON.stringify(resultUser))
         res.json(resultUser)
       })
       .catch((err) => {
@@ -101,6 +123,9 @@ const Users = {
         {
           return helper.response('error', res, null, 401, 'Id Not Found')
         }
+        client.flushdb(function (err, succeeded) {
+          console.log(succeeded)
+        })
         res.json(resultUser)
       })
       .catch((err) => {

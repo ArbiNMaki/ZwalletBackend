@@ -4,7 +4,7 @@ const managePhone = {
 	  viewPhone: (id) => {
     return new Promise((resolve, reject) => {
       if (id) {
-        connection.query(`SELECT * FROM phone_user WHERE id_user= ${id}`, (error, results) => {
+        connection.query(`SELECT * FROM phone_user WHERE id_user='${id}'`, (error, results) => {
           if (!error) {
             resolve(results)
           } else {

@@ -1,10 +1,11 @@
 const express = require('express')
 const router = express.Router()
 const transactionController = require('../controllers/transactionController')
+const {verifyAccess} = require('../middlewares/auth')
 router
-  .get('/', transactionController.view)
-  .post('/', transactionController.insert)
-  .get('/:id', transactionController.detail)
-  .patch('/:id', transactionController.update)
-  .delete('/:id', transactionController.delete)
+  .get('/',verifyAccess, transactionController.view)
+  .post('/',verifyAccess, transactionController.insert)
+  .get('/:id',verifyAccess, transactionController.detail)
+  .patch('/:id',verifyAccess, transactionController.update)
+  .delete('/:id',verifyAccess, transactionController.delete)
 module.exports = router

@@ -12,7 +12,7 @@ exports.verifyAccess = (req,res, next) => {
                 if (err.name === 'JsonWebTokenError') {
                     return helper.response('error', res, null, 401, 'Invalid Token')
                 } else if (err.name === 'TokenExpiredError'){
-                   return helper.response('error', res, null, 200, 'Token EXpired')
+                   return helper.response('error', res, null, 401, 'Token Expired')
                 }
             }
             req.users = decoded

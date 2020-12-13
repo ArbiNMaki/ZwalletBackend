@@ -22,8 +22,8 @@ const Transaction = {
       senderId,
       receiverId,
       amount,
-      date: new Date(),
       notes,
+      date: new Date(),
       createdAt: new Date()
     }
     modelTransaction.insertTransaction(data)
